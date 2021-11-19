@@ -1,0 +1,46 @@
+import styled from "styled-components";
+import {AppContext} from "../AppContext/AppContext";
+import {useContext, useState, useEffect} from "react";
+
+const Cart = () => {
+    const {cart, product, handleCart} = useContext(AppContext);
+    console.log(cart);
+    const [total, setTotal] = useState();
+     useEffect(() => {
+        let sum = 0;
+        cart.forEach((e) => {
+            sum = sum + e.price;
+        })
+        setTotal(sum);
+    },[])
+    return (
+        <div>
+            <table>
+                <tr>Invoice</tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total price</th>
+                </tr>
+                {
+                    cart.map((e) => (
+                        <tr key = {e.id}>
+                            <td>{e.product_name}</td>
+                            <td>1</td>
+                            <td>{e.price}</td>
+                            <td>{e.price}</td>
+                        </tr>
+                    ))
+                }
+                <tr>
+                    <td>Total price is {
+                        total
+                        }</td>
+                </tr>
+            </table>
+        </div>
+    )
+}
+
+export {Cart};
