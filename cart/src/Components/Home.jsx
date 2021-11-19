@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 
 const Home = () => {
 
-    const {product, handleCart} = useContext(AppContext);
+    const {cart, product, handleCart} = useContext(AppContext);
     
 
 
@@ -108,8 +108,25 @@ const Home = () => {
 
         const [quantity, setQuantity] = useState(1);
 
-        const handleQuantity = (q) => {
-            console.log(product);
+        const handleQuantityMinus = (e) => {
+            let index = cart.findIndex((p)=> p.id == e.id);
+            if(index > -1) {
+                let productItem = cart[index];
+                productItem.quantity = productItem.quantity - 1;
+                cart[index] = productItem;
+                // console.log(cart);
+            }
+
+        }
+        const handleQuantityPlus = (e) => {
+            let index = cart.findIndex((p)=> p.id == e.id);
+            if(index > -1) {
+                let productItem = cart[index];
+                productItem.quantity = productItem.quantity + 1;
+                cart[index] = productItem;
+                // console.log(cart);
+            }
+
         }
 
     return (
@@ -128,10 +145,14 @@ const Home = () => {
                         <Quantity_container>
                             <Quantity>
                                 <Minus onClick = {() => { 
-                                    handleQuantity(e.quantity + 1)
+                                    handleQuantityMinus(e)
                                 }}>-</Minus>
-                                <Number>{quantity}</Number>
-                                <Plus onClick = {() => (setQuantity(quantity + 1))}>+</Plus>
+                                <Number>{
+                                        cart.map((p) => p.id == e.id ? `${p.quantity}` : e.quantity)
+                                    }</Number>
+                                <Plus onClick = {() => { 
+                                    handleQuantityPlus(e)
+                                }}>+</Plus>
                             </Quantity>
                             <Button>
                                 <Cart_button onClick = {() => { 

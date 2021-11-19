@@ -13,11 +13,14 @@ const AppContextProvider = ({children}) => {
       }, {
         "id": 2,
         "product_name": "Bread - Burger",
+        "quantity" : 1,
+
         "image_url": "http://dummyimage.com/200x200.png/dddddd/000000",
         "description": "felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices",
         "price": 763
       }, {
         "id": 3,
+        "quantity" : 1,
 
         "product_name": "Beans - Kidney White",
         "image_url": "http://dummyimage.com/200x200.jpg/ff4444/ffffff",
@@ -29,8 +32,20 @@ const AppContextProvider = ({children}) => {
       const [cart, setCart] = useState([]);
 
       const handleCart = (data) => {
+        let index = cart.findIndex((p)=> p.id == data.id);
+        if(index > -1) {
+            let productItem = cart[index];
+            productItem.quantity = productItem.quantity + 1;
+            cart[index] = productItem;
+            // console.log(cart);
+        } else {
           setCart([...cart, data]);
+        }
+          
       }
+      // const handleQuantity = (id, val) {
+
+      // }
 
     return (
         <AppContext.Provider value = {{product, cart, handleCart}}>

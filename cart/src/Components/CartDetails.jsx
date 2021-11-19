@@ -9,7 +9,8 @@ const Cart = () => {
      useEffect(() => {
         let sum = 0;
         cart.forEach((e) => {
-            sum = sum + e.price;
+
+            sum = sum + (e.price * e.quantity);
         })
         setTotal(sum);
     },[])
@@ -27,9 +28,9 @@ const Cart = () => {
                     cart.map((e) => (
                         <tr key = {e.id}>
                             <td>{e.product_name}</td>
-                            <td>1</td>
+                            <td>{e.quantity}</td>
                             <td>{e.price}</td>
-                            <td>{e.price}</td>
+                            <td>{e.quantity * e.price}</td>
                         </tr>
                     ))
                 }
